@@ -1,0 +1,395 @@
+0
+REfrence error 
+Afsuski, "refrens error" deb aytilgan ma'noni tushunmadim. Eslatma uchun, "reference error" (maqola xatosi) deyiladi. Bu xato, sizning dasturingizda o'zgaruvchilar yoki funksiyalarni yuritishda xatolik yuzaga kelganda generatsiyalanadi. Bu turi xatolar umumiy ravishda o'zgaruvchining yoki funksiyaning mavjud olmadigini ko'rsatadi.
+
+Bunday xatolarni aniqlab berish uchun quyidagi muammo yechish tizimini tavsiya qilaman:
+
+1. Xatolik haqida ma'lumot oling: O'yin oynashda yoki brauzerdagi qanday amalda yuritilayotgan bo'lsa, konsoleda yoki brauzer dev tools-da xatolikning mavjudligini tekshiring. Xatolik haqida yana ma'lumot olishingiz mumkin.
+
+2. Dastur kodini tekshiring: Xatolik xabari o'rtiqcha qatorda, o'zgaruvchini nomini noto'g'ri yoki uning qiymatini yaratmaganingiz bilan bog'liq bo'lishi mumkin. Kodingizni tekshirib, muammolarni aniqlang.
+
+3. Mavjudlikni tekshiring: O'zgaruvchilar yoki funksiyalar haqida ishlashdan oldin, ularning mavjudligini va to'g'ri e'lon qilinganligini tekshiring. Avvalgi qismlarda o'zgaruvchilarni yoki funksiyalarni to'g'ri e'lon qilganingizdan ishonching.
+
+4. Konsolni tekshirish: Qo'shimcha ma'lumot olish uchun, konsoleda o'zgaruvchilarni va funksiyalarni yoki xatolik haqida ma'lumotlarni chop etish orqali qanday bo'lganligini aniqlang.
+
+Eslatma: Agar sizning kodlaringizni ko'rib chiqishim mumkin bo'lsa, sizning "Express.js" va "Todo List" dasturingizdagi xatoliklarni yechish uchun yordam berishim mumkin. Agar biror qismini ko'rsatib berishingiz mumkin bo'lsa, o'sha qismga yordam beraman.
+
+
+1
+
+
+"Path", fayllar va direktoriyalarni belgilash, yaratish, tahlil qilish va harakat qilish uchun Node.js-da foydalaniladigan bir moduldur. Bu modul, fayl sistemlari bilan ishlashni osonlashtiradi va yo'qligi, yoqligi, bezovta yo'li (absolute path) va boshqalar kabi ma'lumotlarni topish va ishlash imkonini beradi.
+
+Node.js'da "path" modulini foydalanish uchun, `require()` orqali import qilishingiz kerak:
+
+```javascript
+const path = require('path');
+```
+
+Path modulidagi eng ko'p foydalaniladigan funksiyalardan ba'zilari quyidagilardir:
+
+1. `path.join([...paths])`: Berilgan pathlar bo'yicha bitta yo'l qaytaradi. Berilgan argumentlarni bir qatorda birlashtiradi va natijani normalizatsiyalaydi.
+
+2. `path.resolve([...paths])`: Berilgan yo'l elementlarini yo'lda topadigan bir bezovta yo'l (absolute path) qaytaradi. Odatda, qaysi joydan boshlash kerakligini bildirgan yo'l bermasangiz, joriy ishchi direktoriyadan boshlanadi.
+
+3. `path.basename(path, [ext])`: Fayl yoki direktoriya nomini olish uchun foydalaniladi. Fayl nomini olish uchun `ext` argumentini kiritishingiz mumkin.
+
+4. `path.dirname(path)`: Fayl yoki direktoriyaning yo'lini olish uchun foydalaniladi.
+
+5. `path.extname(path)`: Faylning kengaytmasini olish uchun ishlatiladi.
+
+6. `path.parse(pathString)`: Fayl yoki direktoriya yo'lini ajratib tashlaydi va obyektda ma'lumotlarni qaytaradi, masalan, "dir", "base", "name" va "ext" kabi.
+
+7. `path.normalize(path)`: Fayl yo'lini normalizatsiya qiladi, to'g'ri yo'lning ishoralarini va bo'sh joylarni tuzatadi.
+
+`path` moduli yordamida yo'l va fayllar bilan ishlash, proyektlarda fayllarni yuklash, fayllarni o'qish yoki yozish, yo'l manzaralarini tahrirlash va boshqa ko'plab vazifalarni amalga oshirish uchun juda foydali bo'ladi.
+
+
+2
+
+"static" middleware Express.js'da, foydalanuvchilarga direktoriyalardagi statik fayllarga o'rnatilgan istiqomatlangan URL lar orqali yolg'onlikda ro'yxatdan o'tish imkonini beradi. Statik fayllar, HTML, CSS, JavaScript, şəkillər va boshqa məlumatlarni o'z ichiga oladi, va ular odatda dinamik server tomonidan generatsiya qilinmaydi.
+
+Express.js-da "static" middleware-ni qo'llash uchun, "express.static()" funksiyonidan foydalanamiz. "static" funksiyoniga, statik fayllar uchun saqlangan direktoriyani yuklab beriladi. Odatda, "public" yoki "static" nomi bilan nomlangan direktoriya ishlatiladi. Bu, standart amal qoidalarini o'rnatishga yordam beradi, lekin siz o'zgartirishingiz mumkin.
+
+Quyidagi misolda, Express.js'da "static" middleware-ni qanday ishlatishni ko'ramiz:
+
+1. Statik fayllarni saqlash uchun "public" direktoriyasini tuzing va ichiga fayllarni joylang (masalan, index.html, style.css, script.js):
+
+```
+project_directory
+|-- node_modules
+|-- public
+    |-- index.html
+    |-- style.css
+    |-- script.js
+|-- app.js
+|-- package.json
+```
+
+2. Express.js dasturida "static" middleware-ni import qilib, "public" direktoriyasini foydalanuvchilarga ko'rsatuvchi yo'l sifatida qo'shib olamiz:
+
+```javascript
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// "public" direktoriyasini "static" middleware bilan bog'laymiz
+app.use(express.static('public'));
+
+// Qolgan kodlar va route-lar shunga keyin yoziladi
+
+// Serverni ishga tushirish
+app.listen(port, () => {
+  console.log(`Server http://localhost:${port} da ishga tushdi`);
+});
+```
+
+Endi, `http://localhost:3000` URL manzarasida Express.js serverini ishga tushurishingizda "public" direktoriyasida saqlangan fayllarga doimiy ro'yxatdan o'tishingiz mumkin. Misol uchun, "http://localhost:3000/index.html" URL manzarasida "index.html" faylini ko'rishingiz mumkin.
+
+Bu usul, Express.js'da statik fayllarni tashkil qilishda juda ko'p foyda keltiradi va osonlik bilan frontend fayllarini, CSS va JavaScript fayllarini to'plab olish imkonini beradi.
+
+
+
+
+3
+Express.js-da "Router" middleware-i, HTTP so'rovlarini tashqi yo'llar bo'yicha tahlil qilish uchun foydalaniladigan o'zining routing funksionalitetiga ega bo'lgan obyektdir. "Router" obyekti, tashqi HTTP metodlariga (GET, POST, PUT, DELETE, va h.k.) va URL manzaralariga qarab qo'lda kelgan so'rovlarni tekshiradi va ularni mos route-larga bog'lash imkonini beradi.
+
+Express.js-dagi "Router" middleware-i, dasturning tashqi yo'llarini va funksiyalarini tashkil qilishga yordam beradi va kodni modularlik va to'g'rilik bilan yozishga imkon beradi. Bunda dasturning to'liq kodini "app.js" faylida yozish o'rniga, kodni raqamlardan tashkil topgan bir qatorga aylantirib bo'lmaydi. Bu usul, dastur kodini o'rganishni osonlashtiradi va dastur ko'rinishini tashqi yo'l ichiga joylashdirish imkonini beradi.
+
+Router obyekti orqali, dasturda katta miqdorda route-lar va routing funksiyalari bo'lishini yaratishingiz mumkin. Misol uchun, Express.js-dagi "Router" obyekti bilan "user" route-larini tuzish mumkin:
+
+1. Express.js dasturida "Router" middleware-ni import qilish:
+
+```javascript
+const express = require('express');
+const router = express.Router();
+```
+
+2. "Router" obyektida routing funksiyalarni yaratish:
+
+```javascript
+// GET /users/ manziliga tashrif qilganda ishlaydigan routing funksiyasi
+router.get('/', (req, res) => {
+  res.send('Barcha foydalanuvchilarni ko\'rish');
+});
+
+// POST /users/ manziliga tashrif qilganda ishlaydigan routing funksiyasi
+router.post('/', (req, res) => {
+  res.send('Foydalanuvchi yaratish');
+});
+
+// GET /users/:id manziliga tashrif qilganda ishlaydigan routing funksiyasi
+router.get('/:id', (req, res) => {
+  const userId = req.params.id;
+  res.send(`Foydalanuvchi IDsi: ${userId}`);
+});
+```
+
+3. "Router" obyektni "app.js" fayliga bog'lash:
+
+```javascript
+const express = require('express');
+const app = express();
+const userRouter = require('./userRouter'); // Yuqoridagi Router obyektini yaratgan fayl nomi
+
+app.use('/users', userRouter); // /users manziliga tashrif qilganda "userRouter" obyektini ishga tushiramiz
+
+// Qolgan kodlar va route-lar shunga keyin yoziladi
+
+// Serverni ishga tushirish
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server http://localhost:${port} da ishga tushdi`);
+});
+```
+
+"Router" obyekti bilan Express.js-dagi "users" manziliga tashrif qilganda, bog'lanishi kerak bo'lgan routing funksiyalar ishlaydi. Misol uchun, "/users/" manziliga GET so'rovi tushirilsa, "Barcha foydalanuvchilarni ko'rish" javobini qaytaradi. "/users/:id" manziliga GET so'rovi tushirilsa, "Foydalanuvchi IDsi: {userId}" javobini qaytaradi, bu yerda {userId} o'zgarmagan qiymat bilan almashtiriladi.
+
+Bu usul Express.js dasturining yaxshi tashqi yo'l tuzishni osonlashtiradi va kodni modulyar va tizimli qiladi. Bu tarzda kod yozish, dastur kodini boshqarishni osonlashtiradi va tashqi yo'llarni organizatsiya qilishni osonlashtiradi.
+
+4 
+
+Template engine, bir proqramlama dili (genellikle HTML) və verilənlər bazası məlumatları (məlumatlar bazası dərhal doldurulan dəyişənlər) arasında birləşməyi təmin edən bir alətdir. Bu, dinamik veb səhifələri hazırlamağa imkan verir və eyni şablonları fərqli verilənlərlə doldurmağa imkan verir.
+
+Bir template engine, şablonu təyin edilmiş yerlərlə (örnək üçün, "{{ variable }}") mübadilə edir və nihayətində bu şablonlarla birlikdə proqramlama dili sintaksisinə uyğun tam HTML səhifələrini yaradır. Bu, veb sayfalarının dinamik olaraq generasiyasına, məlumatları göstərməyə və bir çox təkrarlanan kodları yenidən istifadə etməyə kömək edir.
+
+Node.js və Express.js kimi server tərəfdə tətbiqlərdə, elmi dillər olan JavaScript və ya TypeScript ilə şablon ma
+
+5 
+
+
+`express.urlencoded()` metodi, Express.js'da gelen HTTP POST so'rovlari uchun middleware-ning bir xil shaklidir. Bu middleware, HTML formalaridan kelgan datani HTTP POST so'rovi orqali kelgan ma'lumotlar (form data) bilan o'qimayi, tahlil qilishga imkon beradi.
+
+HTML formlari yordamida xabarnomalar, fayllar yuborish va boshqa ma'lumotlarni serverga POST so'rovi bilan yuborish odatda "urlencoded" formatda amalga oshiriladi. Bunda, ma'lumotlar HTTP so'rovining xuddi URL shaklini oladi, masalan, "key1=value1&key2=value2".
+
+`express.urlencoded()` middleware-i, HTTP POST so'rovlari orqali yuborilgan "urlencoded" formatdagi ma'lumotlarni o'qib, ulardan foydalanishga imkon beradi. Bu middleware, foydalanuvchidan HTML formasi orqali kelgan datani tahlil qiladi va Express.js'ga "req.body" obyektiga o'rnatadi.
+
+Bu middleware-ni Express.js dasturingizda quyidagicha ishlatishingiz mumkin:
+
+```javascript
+const express = require('express');
+const app = express();
+
+// "urlencoded" formatdagi ma'lumotlarni tahlil qilish uchun middleware-ni qo'shamiz
+app.use(express.urlencoded({ extended: true }));
+
+// POST so'rovlari uchun route
+app.post('/form-submit', (req, res) => {
+  const formData = req.body; // "urlencoded" formatdagi ma'lumotlar "req.body" ichida
+  console.log(formData);
+  // Yuborilgan ma'lumotlarga ko'rsatma va boshqa amallar
+  // ...
+});
+
+// Qolgan kodlar va route-lar shunga keyin yoziladi
+
+// Serverni ishga tushirish
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server http://localhost:${port} da ishga tushdi`);
+});
+```
+
+Yuqoridagi misolda, Express.js-dagi `express.urlencoded()` middleware-i "form-submit" manziliga kelgan POST so'rovlari orqali "urlencoded" formatdagi ma'lumotlarni tahlil qiladi. Tahlil qilingan ma'lumotlar `req.body` ichidagi obyektga joylanadi va shunda uni konsolga chiqarish orqali ko'rishimiz mumkin.
+
+`express.urlencoded()` middleware-i ishlatilmasa, `req.body` ichida ma'lumotlar bo'sh qoladi, shuning uchun form data ni o'qish va tahlil qilish uchun bu middleware-ni qo'shish talab qilinadi.
+
+
+6
+
+`res.redirect()` Express.js-dagi HTTP 3xx (redirect) status kodi bilan birlikda, foydalanuvchini boshqa bir URL ga yo'naltirish imkonini beradi. Bu metoddan foydalanarak, foydalanuvchilarni bir URL dan boshqa bir URL ga o'tkazish va sayohatlarini o'zgartirishga imkon yaratiladi.
+
+`res.redirect()` metodini Express.js dasturingizda quyidagicha ishlatishingiz mumkin:
+
+```javascript
+const express = require('express');
+const app = express();
+
+// GET so'rovlari uchun route
+app.get('/page1', (req, res) => {
+  // foydalanuvchini /page2 ga yo'naltiramiz
+  res.redirect('/page2');
+});
+
+// GET so'rovlari uchun route
+app.get('/page2', (req, res) => {
+  res.send('Siz /page2 ga o\'tdingiz');
+});
+
+// Qolgan kodlar va route-lar shunga keyin yoziladi
+
+// Serverni ishga tushirish
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server http://localhost:${port} da ishga tushdi`);
+});
+```
+
+Yuqoridagi misolda, "/page1" manziliga foydalanuvchi kelganida, u shu sahifadan "/page2" ga avtomatik ravishda yo'naltiriladi. Bunda foydalanuvchi URL-ni tanimasdan "/page1" manziliga kelgan bo'lsa, uni "/page2" ga yo'naltirib o'tkazadi va "Siz /page2 ga o'tdingiz" xabarni ko'rsatadi.
+
+`res.redirect()` metodi, HTTP 302 (Found) yoki 307 (Temporary Redirect) status kodi bilan foydalanuvchini boshqa URL ga o'tkazadi. 303 (See Other) status kodi ham foydalanilishi mumkin, agar `res.redirect()` metodiga obyekt sifatida { "Location": "/page2" } berilsa. Bunda server foydalanuvchini "/page2" ga yo'naltiradi.
+
+7 
+
+Kechirasiz, bir qo'llanma bilan uchrashib, Express.js-da `res.params` emas, balki `req.params` mavjud bo'ladi. `req.params` - bu, Express.js'da yorqin parametrlarni (URL dinamik parametrlari) o'qish uchun ishlatiladigan bir obyekt hisoblanadi.
+
+Express.js'da, yorqin parametrlar URL manzarasida belgilanadi va URL dinamik parametrlari ko'rinishida ishlatiladi. URL manzarasida parametrlar ko'rsatilganda, Express.js `req.params` obyektida ularga mos qiymatlar beradi.
+
+Yuqoridagi quyidagi misol bilan Express.js'da `req.params` qanday ishlatilishi:
+
+```javascript
+const express = require('express');
+const app = express();
+
+// /users/:userId manziliga tashrif qilganda ishlaydigan routing funksiyasi
+app.get('/users/:userId', (req, res) => {
+  const userId = req.params.userId; // dinamik parametrni o'qiyapti
+  res.send(`Foydalanuvchi IDsi: ${userId}`);
+});
+
+// Qolgan kodlar va route-lar shunga keyin yoziladi
+
+// Serverni ishga tushirish
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server http://localhost:${port} da ishga tushdi`);
+});
+```
+
+Yuqoridagi misolda, `/users/:userId` manziliga tashrif qilganda, URL-dagi dinamik parametr (`userId`) `req.params` obyektida o'qilib olindi. Fayl manzarasida `/users/123` manziliga tashrif qilganda, `req.params.userId` qiymati `123` bo'ladi. Shuning uchun javobda "Foydalanuvchi IDsi: 123" xabarini olishimiz mumkin.
+
+`req.params` obyekti Express.js-da URL dinamik parametrlarini o'qish uchun juda foydali va qulaydir. U, RESTful API-lar yaratishda, ma'lumotlarni o'qish uchun ishlatilgan eng kuchli vositalardan biridir.
+
+
+8
+
+`res.query` dasturlashda o'zgarmaydigan bir nom hisoblanadi. Masalan, Express.js yoki Node.js kabi turli texnologiyalarda ma'lumotlarni o'qish uchun foydalaniladigan yorqin bir obyekt emas.
+
+Biroq, sizning savolingizning ma'nosi to'g'ri bo'lishi mumkin. Sizning ehtimolingiz, `res.query` bilan `req.query` degan obyekt haqida so'z kelgan edi. Aslida bu, Express.js-da HTTP so'rovining URL query qismidagi parametrlarni o'qish uchun ishlatiladigan bir obyekt hisoblanadi.
+
+Express.js-dagi `req.query` obyekti, HTTP so'rovining query string (URL da "param1=value1&param2=value2" shaklida berilgan parametrlar) bo'limidan kelgan parametrlarni saqlaydi. Bu parametrlar `req.query` obyekti ichidagi xususiyatlarga o'xshaydi.
+
+Misol uchun, `http://localhost:3000/users?name=John&age=30` URL manzarasida, `req.query` obyekti quyidagicha bo'ladi:
+
+```javascript
+{
+  name: 'John',
+  age: '30'
+}
+```
+
+Bu yordam bilan, Express.js'da foydalanuvchidan kelgan ma'lumotlarni o'qish va ularga mos javobni qaytarish osonlashtiriladi. Agar sizning dasturingizda `res.query` degan ma'no bo'lsa, unda `req.query` deb ishlatiladi.
+
+9
+
+
+`res.send()` metod Express.js'da foydalanuvchiga HTTP javobini, ma'lumotlar yoki fayllar bilan qaytarish imkonini beradi.
+
+Express.js-dagi `res.send()` metodi quyidagi tipdagi ma'lumotlar bilan ishlayadi:
+
+1. Mətn (`String`) - Ma'lumotlar `text/plain` formatida foydalanuvchiga qaytariladi.
+2. Ob'yekt (`Object`) va ya yaqin tipli verilənlər - Ma'lumotlar `application/json` formatida foydalanuvchiga qaytariladi.
+3. Massiv (`Array`) va s. - Ma'lumotlar `application/json` formatida foydalanuvchiga qaytariladi.
+4. HTML - Ma'lumotlar `text/html` formatida foydalanuvchiga qaytariladi.
+5. Fayllar - Fayllar binar (binary) formatda foydalanuvchiga qaytariladi.
+
+Misol uchun:
+
+```javascript
+const express = require('express');
+const app = express();
+
+// GET so'rovini qabul qilish uchun route
+app.get('/hello', (req, res) => {
+  res.send('Assalomu alaykum, dunyo!'); // Mətn qaytarish
+});
+
+// GET so'rovini qabul qilish uchun route
+app.get('/user', (req, res) => {
+  const user = { name: 'John', age: 30 };
+  res.send(user); // Ob'yekt qaytarish
+});
+
+// Qolgan kodlar va route-lar shunga keyin yoziladi
+
+// Serverni ishga tushirish
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server http://localhost:${port} da ishga tushdi`);
+});
+```
+
+Yuqoridagi misolda, `/hello` manziliga tashrif qilganda "Assalomu alaykum, dunyo!" mətni va `/user` manziliga tashrif qilganda `{ name: 'John', age: 30 }` ob'yekti foydalanuvchiga qaytariladi. Bu, foydalanuvchiga HTTP cavabini yuborish uchun `res.send()` metodidan foydalanishni ko'rsatadi.
+
+
+
+10
+
+`res.sendFile()` metodi Express.js-da, fayllarni foydalanuvchiga HTTP cavabi sifatida jo'natish imkonini beradi. Bu metoddan foydalanarak, serverda saqlangan fayllarni foydalanuvchilarga yuborish osonlashtiriladi.
+
+`res.sendFile()` metodi, fayllarni binar formatda jo'natadi, shuning uchun matnlar, JSON, HTML va boshqa datalar ko'rinishida jo'natish uchun qo'llanilmaydi. Bu metoddan foydalanib, fayllarni foydalanuvchiga yuborishda, web ilovalarini yuklash, rasmlar, videolar va boshqa statik fayllar ko'rinishida ishlatish mumkin.
+
+Express.js-dagi `res.sendFile()` metodi quyidagi shaklda ishlatiladi:
+
+```javascript
+res.sendFile(path[, options][, callback])
+```
+
+- `path`: Faylni yo'l (path) qiladi, masalan, `'public/images/picture.jpg'`.
+- `options` (optional): Ob'yekt, `root`, `headers`, `dotfiles`, va boshqa xususiyatlar bilan sozlanishi mumkin.
+- `callback` (optional): Fayl jo'natildikdan keyin ishlatiladigan funksiya.
+
+Misol uchun:
+
+```javascript
+const express = require('express');
+const path = require('path');
+const app = express();
+
+// GET so'rovini qabul qilish uchun route
+app.get('/image', (req, res) => {
+  const imagePath = path.join(__dirname, 'public/images/picture.jpg');
+  res.sendFile(imagePath);
+});
+
+// Qolgan kodlar va route-lar shunga keyin yoziladi
+
+// Serverni ishga tushirish
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server http://localhost:${port} da ishga tushdi`);
+});
+```
+
+Yuqoridagi misolda, `/image` manziliga tashrif qilganda, `public/images/picture.jpg` fayli binar formatda foydalanuvchiga jo'natiladi. Bu yordam bilan, serverdagi fayllarni foydalanuvchilarga yo'l bilan jo'natish osonlashtiriladi. `res.sendFile()` metodi yordamida fayllar "Content-Disposition" headeri bilan bog'lanmaydi, shuning uchun brauzer fayllarni iste'molchiga qaytaradi va uni otomatik ravishda yuklaydi.
+
+
+12
+
+"Callback" (qaytarib chaqirish) dasturlashdagi funksiya usuli boʻlib, JavaScript dasturlash tilida amalga oshiriladi. Callback funksiyalari, boshqa funksiya tugaganda yoki boshqa amal bajarilgan bo'lganda chaqiriladigan funksiyalardir. Bu usul, asinxronlik va asinxronlik kodni boshqarishda juda kuchli va ko'p qo'llaniladigan usul hisoblanadi.
+
+Callback funksiyalari, funksiya tashqi operatsiyalarni bajarish uchun ishlatiladi va amalga oshirish uchun uzun vaqt talab etadigan operatsiyalarni to'xtatish vaqti kelgach chaqiriladi. Bu, muhim asinxron operatsiyalarni bajarishda, masalan, fayllarni yuklash, ma'lumotlar omboridan malumotlar olish, HTTP so'rovlarini jo'natish kabi vazifalarda juda qulaydir.
+
+JavaScript funksiyalari obyekt sifatida o'xshash bo'lgani uchun, bir funksiya boshqa funksiya argumenti sifatida o'tkazilishi va boshqa funksiya tomonidan chaqirilishi mumkin. Bunday funksiya argumentiga "callback" deb ataladi.
+
+Misol uchun, quyidagi kodda `doSomething()` funksiyasi `callback` deb nomlanadi va boshqa funksiya sifatida o'xshash bo'lib, u amal bajarilganida "Done!" deb yozadi:
+
+```javascript
+function doSomething(callback) {
+  // Amalga oshirilishi uzun vaqt talab etadigan operatsiya
+  // Masalan, fayl yuklash, tarmoqdan ma'lumotlarni olish yoki bazaga so'rov jo'natish
+
+  // Operatsiya tugaganda, "callback" funksiyasini chaqirib o'tkazamiz
+  callback('Done!');
+}
+
+function onComplete(message) {
+  console.log(message);
+}
+
+doSomething(onComplete); // "Done!" chiqadi
+```
+
+Yuqoridagi kod misolida `doSomething()` funksiyasi uzun vaqt talab etadigan bir operatsiyani ifodalaydi. `doSomething()` funksiyasi amalga oshirilganda, "Done!" xabarini ekranga chiqarib beradi. Bunda `onComplete` funksiyasi `callback` funksiyasi sifatida o'xshash bo'lib, `doSomething()` funksiyasi tarkibi tugaganda, "Done!" xabarini o'z ichiga oladi va ekranga chiqaradi.
+
+Callback funksiyalari asinxron amalni ishga tushirishda va kodni to'g'ri va tizimli qilishda juda qulay bo'lgan qo'llaniladigan usul hisoblanadi.
