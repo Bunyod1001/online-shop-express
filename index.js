@@ -1,12 +1,7 @@
 import express from 'express';
-import path, {dirname} from 'path'
-import { fileURLToPath } from 'url';
 import { create, engine } from 'express-handlebars';
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-
+import AuthRoutes from "./routes/auth.js"
+import ProductsRoutes from "./routes/products.js"
 
 const app = express();
 
@@ -19,14 +14,10 @@ app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
 app.set('views', './views')
 
+app.use(AuthRoutes )
+app.use(ProductsRoutes)
 
-app.get ( '/', (req, res) => {
- res.render('index')
-})
-
-app.get ( '/about', (req, res) => {
-    res.render('about')
-})
+   
 
 const PORT = process.env.PORT || 4100
 app.listen(PORT, () => 
