@@ -1,1 +1,37 @@
-<h1>Add</h1>
+<div class="row">
+  <div class="col-md-6">
+    <div class="mt-5rem">
+      <p class="fs-1">Add products</p>
+{{#if errorAddProducts}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Error</strong>
+  {{errorAddProducts}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/if}}
+<form action="/add-products" method="post">
+<div class="form-floating mb-3">
+  <input type="text" class="form-control" name="title" id="floatingInput" placeholder="title">
+  <label for="floatingInput">Title</label>
+</div>
+<div class="form-floating mb-3">
+  <textarea  class="form-control" name="description" placeholder="Description" id="floatingTextarea"></textarea>
+  <label for="floatingTextarea">Description</label>
+</div>
+<div class="form-floating mb-3">
+  <input type="text" class="form-control" name="image" id="floatingInput" placeholder="image">
+  <label for="floatingInput">Image</label>
+</div>
+<div class="input-group mb-3">
+  <span class="input-group-text bg-light" id="basic-addon1">$</span>
+  <input type="number" class="form-control" name="price" placeholder="price" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+<button type="submit" class="btn btn-primary mt-3">Add products</button>
+</form>
+</div> 
+ </div>
+ <div class="col-md-6">
+  <img src="/imag.jpg" width="100%" >
+ </div>
+  </div>
+</div>

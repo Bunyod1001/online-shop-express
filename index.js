@@ -6,8 +6,10 @@ import mongoose from 'mongoose';
 import * as dotenv from 'dotenv'
 import flash from "connect-flash"
 import session from "express-session"
-import varMiddleware from './middleware/var.middleware.js';
 import cookiParser from "cookie-parser"
+import varMiddleware from './middleware/var.middleware.js';
+import userMiddleware from './middleware/user.middleware.js';
+import hbsHelper from "./utils/index.js"
 
 dotenv.config()
 
@@ -17,6 +19,7 @@ const app = express();
 const hbs = create({
     defaultLayout:'main',
     extname:"hbs",
+    helpers: hbsHelper,
 })
 
 app.engine('hbs', hbs.engine)
@@ -31,7 +34,7 @@ app.use(cookiParser())
 app.use(session({secret:"Bunyod", resave:false ,saveUninitialized:false}))
 app.use(flash())
 app.use(varMiddleware)
-
+app.use(userMiddleware)
 
 app.use(AuthRoutes )
 app.use(ProductsRoutes)

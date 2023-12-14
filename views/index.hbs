@@ -1,2 +1,72 @@
+<div class="marketing">
+  <div class="row featurette">
+      <div class="col-md-7 mt-10rem">
+          <h2 class="featurette-heading fw-normal lh-1">First featurette heading
+             <span class="text-muted">It'll blow your mind.</span></h2>
+          <p class="lead">Quisque velit nisi, pretium in feugiat sit amet, tempus et get rid </p>
+      </div>
+      <div class="col-md-5">
+          <img src="/jpg1.jpg" width="100%">
+      </div>
+  </div>
+</div>
+<hr class="featurette-divider"/>
+<div class="row featurette">
+   <div class="col-md-7 order-md-2 mt-10rem">
+       <h2 class="featurette-heading fw-normal lh-1">Oh yeah, it's that good. <span class="tex-muted">See for yourself</span> </h2>
+       <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum vitae rerum, officia obcaecati iusto omnis asperiores sunt sapiente delectus hic.
+       </p>
+   </div>
+   <div class="col-md-5 order-md-1">
+       <img src="/jpg2.jpg" width="100%">
+   </div>
+</div>
+   <hr class="featurette-divider" />
+{{#if products.length}}
+   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {{#each products}}
+      <div class="col">
+          <div class="card shadow-sm">
+            <img class="products-image" src="{{image}}"/>   
+            <div class="card-body">
+              <p class="card-text fw-bold">{{title}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="p-0 m-0">{{formatDate createdAt}}</p>
+                <small class="text-body-secondary fs-5">{{price}}.00$</small>
+              </div>
+            </div>
+            <div class="card-footer">
+             <div class="btn-group-sm" role="group" aria-label="Basic example">
+                <a type="button" class="btn btn-outline-primary" href="/product/{{_id}}">Detail</a>
+                 {{#if @root.token}}
+                 {{#ifequal user @root.userId}}
+                <a type="button" class="btn btn-outline-secondary " href="/edit-product/{{_id}}">Edit</a>
+                <form  action="/delete-product/{{_id}}" method="post" class="m-0 btn btn-outline-danger">
+                <button type="submit" class="btn-delete">Delete</button>
+                 </form>
+                 {{/ifequal}}
+            {{/if}}
+              </div>
+            </div>
+          </div>
+        </div>
+    {{/each}}
+   </div>  
+{{else}}
+  <section class="page_404 w-75 mx-auto"> 
+     <div class="row">
+      <div class="col-sm-12">
+        <div class="col-sm-10 col-sm-offset-1 text-center">
+          <div class="four_zero_four_bg">
+            <h1 class="text-center">404</h1>
+          </div>
+          <div class="contant-box_404">
+            <h3>Add new products</h3>
+            <a href="/add" class="btn btn-primary btn-lg mb-5">Add products</a>
+          </div>
+        </div>
+      </div>
+     </div>
+  </section>
+{{/if}}
 
-    <h3>Main page</h3>
